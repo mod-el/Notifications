@@ -17,7 +17,7 @@ class ModelNotificationsController extends Controller
 				$notifications = [];
 				foreach ($q as $n) {
 					if (!$n['sent'])
-						$this->model->_Db->update('model_notifications_recipients', $n['id'], ['sent' => date('Y-m-d H:i:s')], ['skip-user-filter' => true]);
+						$this->model->_Db->update('model_notifications_recipients', $n['id'], ['sent' => date('Y-m-d H:i:s')]);
 
 					$notification = $this->model->_ORM->one('ModelNotification', $n['notification']);
 
