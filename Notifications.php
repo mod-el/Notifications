@@ -20,7 +20,7 @@ class Notifications extends Module
 
 		foreach ($q as $rule) {
 			$rule['data'] = json_decode($rule['data'], true);
-			if (!$rule['data'])
+			if ($rule['data'] === null)
 				continue;
 
 			$idx = sha1($rule['hook'] . json_encode($rule['data']));
