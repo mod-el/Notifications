@@ -14,7 +14,7 @@ class Notifications extends Module
 	 */
 	public function init(array $options)
 	{
-		$q = $this->model->_Db->select_all('model_notification_rules', ['active' => 1]);
+		$q = $this->model->_Db->select_all('model_notification_rules', ['active' => 1], ['skip-user-filter' => true]);
 
 		$notifications = [];
 
@@ -162,7 +162,7 @@ class Notifications extends Module
 
 		foreach ($q as $n) {
 			if (!$n['read'])
-				$this->model->_Db->update('model_notifications_recipients', $n['id'], ['read' => date('Y-m-d H:i:s')]);
+				$this->model->_Db->update('model_notifications_recipients', $n['id'], ['read' => date('Y-m-d H:i:s')], ['skip-user-filter' => true]);
 
 			$notification = $this->model->_ORM->one('ModelNotification', $n['notification']);
 
