@@ -23,7 +23,7 @@ class Notifications extends Module
 
 				$db->options['user-filter']['ignore'][] = 'model_notifications';
 				$db->options['user-filter']['ignore'][] = 'model_notifications_recipients';
-				$db->options['user-filter']['ignore'][] = 'model_notifications_rules';
+				$db->options['user-filter']['ignore'][] = 'model_notification_rules';
 			}
 		}
 
