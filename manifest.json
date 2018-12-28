@@ -1,8 +1,9 @@
 {
 	"name": "Notifications",
 	"description": "",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"dependencies": {
+		"Core": ">=2.8.1",
 		"ORM": ">=1.6.9",
 		"FrontEnd": ">=1.2.0"
 	},

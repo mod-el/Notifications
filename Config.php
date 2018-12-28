@@ -26,9 +26,8 @@ class Config extends Module_Config
 	 *
 	 * @param array $data
 	 * @return bool
-	 * @throws \Exception
 	 */
-	public function install(array $data = []): bool
+	public function init(?array $data = null): bool
 	{
 		$this->model->_Db->query('CREATE TABLE IF NOT EXISTS `model_notification_rules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
