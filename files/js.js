@@ -19,7 +19,7 @@ window.addEventListener('load', function () {
 		if (r) {
 			navigator.serviceWorker.controller.postMessage({
 				'action': 'notifications',
-				'path': absolute_path + 'model-notifications/check',
+				'path': PATH + 'model-notifications/check',
 				'user_idx': model_notifications_user_idx,
 				'user': model_notifications_user
 			});
@@ -34,7 +34,7 @@ window.addEventListener('load', function () {
 });
 
 function checkNotifications() {
-	ajax(absolute_path + 'model-notifications/check', {
+	ajax(PATH + 'model-notifications/check', {
 		'user_idx': model_notifications_user_idx,
 		'user': model_notifications_user
 	}).then(response => {
