@@ -39,7 +39,7 @@ class Save extends NotifyHook
 			$username = $userModule->get($userModule->options['username']);
 
 		$articolo = substr($data['element'], -1) === 'a' ? 'una ' : 'un ';
-		if ($articolo === 'una ' and in_array(strtolower($data['element']{0}), ['a', 'e', 'i', 'o', 'u']))
+		if ($articolo === 'una ' and in_array(strtolower($data['element'][0]), ['a', 'e', 'i', 'o', 'u']))
 			$articolo = 'un\'';
 
 		$text = ($username ?: 'Un utente') . ' ha salvato ' . $articolo . $data['element'] . ' (id #' . $data['id'] . ')';
