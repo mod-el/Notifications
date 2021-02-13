@@ -32,9 +32,29 @@ class ModelNotificationsController extends Controller
 					];
 				}
 
-				echo json_encode($notifications);
-				break;
+				return $notifications;
+			case 'list':
+				$notifications = $this->model->_Notifications->getNotifications($_GET['user_idx']);
+
+				$splitted = [
+					'new' => [
+						'title' => 'Nuove',
+						'notifications' => [],
+					],
+					'seen' => [
+						'title' => 'Già lette',
+						'notifications' => [],
+					],
+				];
+
+				foreach ($notifications as $n) {
+					if ($n['read'])
+						$splitted['seen']['notifications'][] = $n;
+					else
+						$splitted['new']['notifications'][] = $n;
+				}
+
+				return $splitted;
 		}
-		die();
 	}
 }

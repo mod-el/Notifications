@@ -58,15 +58,6 @@ class Notifications extends Module
 					$this->sendNotification($notification, $data);
 			}, true);
 		}
-
-		if (!isset(Globals::$data['adminAdditionalPages']))
-			Globals::$data['adminAdditionalPages'] = [];
-		Globals::$data['adminAdditionalPages'][] = [
-			'name' => 'Notifications',
-			'page' => 'ModelNotifications',
-			'rule' => 'model-admin-notifications',
-			'hidden' => true,
-		];
 	}
 
 	/**
@@ -185,6 +176,7 @@ class Notifications extends Module
 				'url' => $notification['url'],
 				'external' => $notification['external'],
 				'date' => $notification['date'],
+				'formatted_date' => date_create($notification['date'])->format('d/m/Y H:i'),
 				'read' => $n['read'],
 			];
 		}

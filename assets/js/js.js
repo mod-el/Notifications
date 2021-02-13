@@ -33,8 +33,8 @@ window.addEventListener('load', function () {
 	});
 });
 
-function checkNotifications() {
-	ajax(PATH + 'model-notifications/check', {
+async function checkNotifications() {
+	return ajax(PATH + 'model-notifications/check', {
 		'user_idx': model_notifications_user_idx,
 		'user': model_notifications_user
 	}).then(response => {
