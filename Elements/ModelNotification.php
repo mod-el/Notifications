@@ -4,7 +4,7 @@ use Model\ORM\Element;
 
 class ModelNotification extends Element
 {
-	public static $table = 'model_notifications';
+	public static ?string $table = 'model_notifications';
 
 	/**
 	 *
