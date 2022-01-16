@@ -22,8 +22,8 @@ class ModelNotification extends Element
 	 */
 	public function getShortText(): string
 	{
-		$shortText = trim($this['short_text']);
-		if (!$shortText and trim($this['text']))
+		$shortText = trim($this['short_text'] ?: '');
+		if (!$shortText and trim($this['text'] ?: ''))
 			$shortText = textCutOff(trim($this['text']), 300);
 		return $shortText;
 	}
