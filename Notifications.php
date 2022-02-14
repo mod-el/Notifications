@@ -7,7 +7,7 @@ use Model\Core\Module;
 class Notifications extends Module
 {
 	/** @var NotifyHook[] */
-	private $hooks = [];
+	private array $hooks = [];
 
 	/**
 	 * @param array $options
@@ -50,7 +50,7 @@ class Notifications extends Module
 			$notifications[$idx]['rules'][] = $rule;
 		}
 
-		foreach ($notifications as $idx => $notification) {
+		foreach ($notifications as $notification) {
 			$event = $notification['hook']->getEvent();
 
 			$this->model->on($event, function ($data) use ($notification) {

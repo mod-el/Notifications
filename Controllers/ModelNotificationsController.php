@@ -4,7 +4,7 @@ use Model\Core\Controller;
 
 class ModelNotificationsController extends Controller
 {
-	function index()
+	public function index()
 	{
 		switch ($this->model->getRequest(1)) {
 			case 'check':
@@ -33,6 +33,7 @@ class ModelNotificationsController extends Controller
 				}
 
 				return $notifications;
+
 			case 'list':
 				$notifications = $this->model->_Notifications->getNotifications($_GET['user_idx']);
 
