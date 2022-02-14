@@ -20,7 +20,7 @@ class Save extends NotifyHook
 	 */
 	public function canSend(array $rule, array $data): bool
 	{
-		if (isset($rule['element']) and !in_array($rule['element'], ['Element', 'ModelNotification']) and ($data['element'] ?? '') !== $rule['element'])
+		if (isset($rule['data']['element']) and !in_array($rule['data']['element'], ['Element', 'ModelNotification']) and ($data['element'] ?? '') !== $rule['data']['element'])
 			return false;
 
 		return true;

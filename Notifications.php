@@ -43,10 +43,10 @@ class Notifications extends Module
 			if (!isset($notifications[$idx])) {
 				$notifications[$idx] = [
 					'hook' => $hook,
-					'data' => $rule['data'],
 					'rules' => [],
 				];
 			}
+
 			$notifications[$idx]['rules'][] = $rule;
 		}
 
@@ -54,8 +54,7 @@ class Notifications extends Module
 			$event = $notification['hook']->getEvent();
 
 			$this->model->on($event, function ($data) use ($notification) {
-				if ($notification['hook']->canSend($notification['data'], $data))
-					$this->sendNotification($notification, $data);
+				$this->sendNotification($notification, $data);
 			}, true);
 		}
 	}
@@ -87,6 +86,9 @@ class Notifications extends Module
 		try {
 			$notificationsToSend = [];
 			foreach ($notification['rules'] as $rule) {
+				if (!$notification['hook']->canSend($rule, $data))
+					continue;
+
 				$notificationData = $notification['hook']->getNotificationData($rule, $data);
 				if (!$notificationData)
 					continue;
