@@ -17,13 +17,13 @@ class Notifications extends Module
 		$this->model->load('Db');
 
 		foreach ($this->model->allModules('Db') as $db) {
-			if (isset($db->options['user-filter'])) {
-				if (!isset($db->options['user-filter']['ignore']))
-					$db->options['user-filter']['ignore'] = [];
+			if (isset($db->options['tenant-filter'])) {
+				if (!isset($db->options['tenant-filter']['ignore']))
+					$db->options['tenant-filter']['ignore'] = [];
 
-				$db->options['user-filter']['ignore'][] = 'model_notifications';
-				$db->options['user-filter']['ignore'][] = 'model_notifications_recipients';
-				$db->options['user-filter']['ignore'][] = 'model_notification_rules';
+				$db->options['tenant-filter']['ignore'][] = 'model_notifications';
+				$db->options['tenant-filter']['ignore'][] = 'model_notifications_recipients';
+				$db->options['tenant-filter']['ignore'][] = 'model_notification_rules';
 			}
 		}
 
