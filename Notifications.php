@@ -14,17 +14,10 @@ class Notifications extends Module
 	 */
 	public function init(array $options)
 	{
-		$this->model->load('Db');
-
-		foreach ($this->model->allModules('Db') as $db) {
-			if (isset($db->options['tenant-filter'])) {
-				if (!isset($db->options['tenant-filter']['ignore']))
-					$db->options['tenant-filter']['ignore'] = [];
-
-				$db->options['tenant-filter']['ignore'][] = 'model_notifications';
-				$db->options['tenant-filter']['ignore'][] = 'model_notifications_recipients';
-				$db->options['tenant-filter']['ignore'][] = 'model_notification_rules';
-			}
+		if (class_exists('\\Model\\Multitenancy\\MultiTenancy')) {
+			\Model\Multitenancy\MultiTenancy::ignoreTable('primary', 'model_notifications');
+			\Model\Multitenancy\MultiTenancy::ignoreTable('primary', 'model_notifications_recipients');
+			\Model\Multitenancy\MultiTenancy::ignoreTable('primary', 'model_notification_rules');
 		}
 
 		$q = $this->model->_Db->select_all('model_notification_rules', ['active' => 1]);
