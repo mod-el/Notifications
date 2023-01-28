@@ -48,7 +48,7 @@ class Notifications extends Module
 
 			$this->model->on($event, function ($data) use ($notification) {
 				$this->sendNotification($notification, $data);
-			}, true);
+			});
 		}
 	}
 
