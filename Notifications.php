@@ -1,8 +1,9 @@
 <?php namespace Model\Notifications;
 
 use Model\Core\Autoloader;
-use Model\Core\Globals;
 use Model\Core\Module;
+use Model\Events\AbstractEvent;
+use Model\Events\Events;
 
 class Notifications extends Module
 {
@@ -46,8 +47,8 @@ class Notifications extends Module
 		foreach ($notifications as $notification) {
 			$event = $notification['hook']->getEvent();
 
-			$this->model->on($event, function ($data) use ($notification) {
-				$this->sendNotification($notification, $data);
+			Events::subscribeTo($event, function (AbstractEvent $event) use ($notification) {
+				$this->sendNotification($notification, $event);
 			});
 		}
 	}
@@ -71,18 +72,18 @@ class Notifications extends Module
 
 	/**
 	 * @param array $notification
-	 * @param array $data
+	 * @param AbstractEvent $event
 	 * @return bool
 	 */
-	public function sendNotification(array $notification, array $data): bool
+	public function sendNotification(array $notification, AbstractEvent $event): bool
 	{
 		try {
 			$notificationsToSend = [];
 			foreach ($notification['rules'] as $rule) {
-				if (!$notification['hook']->canSend($rule, $data))
+				if (!$notification['hook']->canSend($rule, $event))
 					continue;
 
-				$notificationData = $notification['hook']->getNotificationData($rule, $data);
+				$notificationData = $notification['hook']->getNotificationData($rule, $event);
 				if (!$notificationData)
 					continue;
 

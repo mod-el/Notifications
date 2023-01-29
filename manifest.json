@@ -11,5 +11,8 @@
 			"folder": "NotifyHooks",
 			"class": true
 		}
-	}
+	},
+	"requires": [
+		"model/events"
+	]
 }

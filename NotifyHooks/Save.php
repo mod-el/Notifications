@@ -1,6 +1,7 @@
 <?php namespace Model\Notifications\NotifyHooks;
 
 use Model\Core\Autoloader;
+use Model\Events\AbstractEvent;
 use Model\Notifications\NotifyHook;
 
 class Save extends NotifyHook
@@ -10,17 +11,17 @@ class Save extends NotifyHook
 	 */
 	public function getEvent(): string
 	{
-		return 'ORM_save';
+		return 'OrmSave';
 	}
 
 	/**
 	 * @param array $rule
-	 * @param array $data
+	 * @param AbstractEvent $event
 	 * @return bool
 	 */
-	public function canSend(array $rule, array $data): bool
+	public function canSend(array $rule, AbstractEvent $event): bool
 	{
-		if (isset($rule['data']['element']) and !in_array($rule['data']['element'], ['Element', 'ModelNotification']) and ($data['element'] ?? '') !== $rule['data']['element'])
+		if (isset($rule['data']['element']) and !in_array($rule['data']['element'], ['Element', 'ModelNotification']) and $event->element !== $rule['data']['element'])
 			return false;
 
 		return true;
@@ -28,38 +29,38 @@ class Save extends NotifyHook
 
 	/**
 	 * @param array $rule
-	 * @param array $data
+	 * @param AbstractEvent $event
 	 * @return array|null
 	 */
-	public function getNotificationData(array $rule, array $data): ?array
+	public function getNotificationData(array $rule, AbstractEvent $event): ?array
 	{
 		$userModule = $this->model->getModule('User', $rule['user_idx']);
 		$username = null;
 		if ($userModule->logged())
 			$username = $userModule->get($userModule->options['username']);
 
-		$articolo = substr($data['element'], -1) === 'a' ? 'una ' : 'un ';
-		if ($articolo === 'una ' and in_array(strtolower($data['element'][0]), ['a', 'e', 'i', 'o', 'u']))
+		$articolo = substr($event->element, -1) === 'a' ? 'una ' : 'un ';
+		if ($articolo === 'una ' and in_array(strtolower($event->element[0]), ['a', 'e', 'i', 'o', 'u']))
 			$articolo = 'un\'';
 
-		$text = ($username ?: 'Un utente') . ' ha salvato ' . $articolo . $data['element'] . ' (id #' . $data['id'] . ')';
+		$text = ($username ?: 'Un utente') . ' ha salvato ' . $articolo . $event->element . ' (id #' . $event->id . ')';
 
-		$elementName = Autoloader::searchFile('Element', $data['element']);
+		$elementName = Autoloader::searchFile('Element', $event->element);
 		if (!$elementName)
 			return null;
 
 		$url = null;
 		if ($this->model->isLoaded('AdminFront')) {
-			$adminPage = $this->model->_Admin->getAdminPageForElement($data['element']);
+			$adminPage = $this->model->_Admin->getAdminPageForElement($event->element);
 			if ($adminPage) {
 				$url = $this->model->_AdminFront->getAdminPageUrl($adminPage);
 				if ($url)
-					$url .= '/edit/' . $data['id'];
+					$url .= '/edit/' . $event->id;
 			}
 		}
 
 		if ($url === null and $elementName::$controller)
-			$url = $this->model->getUrl($elementName::$controller, $data['id']);
+			$url = $this->model->getUrl($elementName::$controller, $event->id);
 
 		return [
 			'text' => $text,

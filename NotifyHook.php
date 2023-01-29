@@ -1,13 +1,10 @@
 <?php namespace Model\Notifications;
 
 use Model\Core\Core;
+use Model\Events\AbstractEvent;
 
 abstract class NotifyHook
 {
-	/**
-	 * NotifyHook constructor.
-	 * @param Core $model
-	 */
 	public function __construct(protected Core $model)
 	{
 	}
@@ -19,15 +16,15 @@ abstract class NotifyHook
 
 	/**
 	 * @param array $rule
-	 * @param array $data
+	 * @param AbstractEvent $event
 	 * @return bool
 	 */
-	abstract public function canSend(array $rule, array $data): bool;
+	abstract public function canSend(array $rule, AbstractEvent $event): bool;
 
 	/**
 	 * @param array $rule
-	 * @param array $data
+	 * @param AbstractEvent $event
 	 * @return array|null
 	 */
-	abstract public function getNotificationData(array $rule, array $data): ?array;
+	abstract public function getNotificationData(array $rule, AbstractEvent $event): ?array;
 }
