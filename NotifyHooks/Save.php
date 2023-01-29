@@ -11,7 +11,7 @@ class Save extends NotifyHook
 	 */
 	public function getEvent(): string
 	{
-		return 'OrmSave';
+		return \Model\ORM\Events\OrmSave::class;
 	}
 
 	/**
@@ -45,6 +45,7 @@ class Save extends NotifyHook
 
 		$text = ($username ?: 'Un utente') . ' ha salvato ' . $articolo . $event->element . ' (id #' . $event->id . ')';
 
+		/** @var \Model\ORM\Element $elementName */
 		$elementName = Autoloader::searchFile('Element', $event->element);
 		if (!$elementName)
 			return null;
