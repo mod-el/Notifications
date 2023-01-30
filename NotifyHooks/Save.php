@@ -11,7 +11,7 @@ class Save extends NotifyHook
 	 */
 	public function getEvent(): string
 	{
-		return \Model\ORM\Events\OrmSave::class;
+		return \Model\ORM\Events\Save::class;
 	}
 
 	/**
