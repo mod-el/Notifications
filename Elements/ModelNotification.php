@@ -9,7 +9,7 @@ class ModelNotification extends Element
 	/**
 	 *
 	 */
-	public function init()
+	public function init(): void
 	{
 		$this->has('recipients', [
 			'table' => 'model_notifications_recipients',
