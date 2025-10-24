@@ -8,7 +8,7 @@ class RouterProvider extends AbstractRouterProvider
 	{
 		return [
 			[
-				'pattern' => '/model-notifications',
+				'pattern' => 'model-notifications',
 				'controller' => 'ModelNotifications',
 			],
 		];
