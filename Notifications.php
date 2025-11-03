@@ -119,20 +119,6 @@ class Notifications extends Module
 	}
 
 	/**
-	 * Controller
-	 *
-	 * @param array $request
-	 * @param string $rule
-	 * @return array
-	 */
-	public function getController(array $request, string $rule): ?array
-	{
-		return [
-			'controller' => 'ModelNotifications',
-		];
-	}
-
-	/**
 	 * @param string $user_idx
 	 * @return \Generator
 	 */
